@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+
+  <h1>Todo List</h1>
+
+  <form class="" name="todoForm" action="/todo" method="post">
+
+    <input type="text" name="todoText" value="">
+    <input type="submit" name="todoButton" value="Make todo">
+
+  </form>
+  <h2>Todo List</h2>
+  <ul class="todoList">
+    {{#comp}}
+      <li>{{item}}
+        <form class="completeButtonForm" action="/flip" method="post">
+
+          <button type="submit" name="completeTodo" value="{{id}}">Mark Complete</button></form>
+        <form class="deleteButtonForm" action="/delete" method="post">
+          <button type="submit" name="deleteTodo" value="{{id}}">Delete Item</button>
+        </form>
+        <form class="updateForm" action="/update" method="post">
+          <input type="text" name="updateText" value="" placeholder="Update this item...">
+          <button type="submit" name="updateTodo" value="{{id}}">Update Item</button>
+
+        </form>
+      </li>
+    {{/comp}}
+  </ul>
+
+  <h2>Completed Tasks</h2>
+  <ul class="complete">
+    {{#uncomp}}
+      <li>{{item}}</li>
+    {{/uncomp}}
+  </ul>
+  <form class="destroyItAll" action="/destroy" method="post">
+    <button type="submit" name="destroyButton">BLOW IT ALL TO HELL</button>
+  </form>
+</body>
+
+</html>
