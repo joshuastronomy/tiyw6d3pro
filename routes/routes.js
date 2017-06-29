@@ -2,12 +2,12 @@ const express = require('express');
 const models = require("../models");
 const router = express.Router();
 
-//This goes through the entire model, takes the results into todos, then sorts the results into two variables, taking items from our todo object and filters them by t or f in the completed column.  This makes the mustaches work because it's the whole entry that's getting filtered into comp/uncomp, so {{item}} works.  Also don't forget [[]] for some dumb reason when ordering.
+//This goes through the entire model, takes the results into todos, then sorts the results into two variables, taking items from our todo object and filters them by t or f in the completed column.  This makes the mustaches work because it's the whole entry that's getting filtered into comp/uncomp, so {{item}} works.  Also don't forget [[]] for some dumb reason when ordering.  Also also changed the varables so I could see exactly what's doing what.
 router.get('/', function(req, res) {
   models.todo.findAll({order: [['createdAt', 'DESC']]})
-    .then(todos => {
-      const comp = todos.filter(todo => !todo.completed);
-      const uncomp = todos.filter(todo => todo.completed);
+    .then(bigDeal => {
+      const comp = bigDeal.filter(whoCares => !whoCares.completed);
+      const uncomp = bigDeal.filter(whoCares => whoCares.completed);
       res.render('todos', {
         comp: comp,
         uncomp: uncomp
