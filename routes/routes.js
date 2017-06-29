@@ -1,8 +1,8 @@
 const express = require('express');
-const models = require("../models");
+const models = require('../models');
 const router = express.Router();
 
-//This goes through the entire model, takes the results into todos, then sorts the results into two variables, taking items from our todo object and filters them by t or f in the completed column.  This makes the mustaches work because it's the whole entry that's getting filtered into comp/uncomp, so {{item}} works.  Also don't forget [[]] for some dumb reason when ordering.  Also also changed the variables so I could see exactly what's doing what.
+//This goes through the entire model, takes the results into bigDeal, then sorts the results into two variables, taking items from our todo object and filters them by t or f in the completed column.  This makes the mustaches work because it's the whole entry that's getting filtered into comp/uncomp, so {{item}} works.  Also don't forget [[]] for some dumb reason when ordering.  Also also changed the variables so I could see exactly what's doing what.
 router.get('/', function(req, res) {
   models.todo.findAll({order: [['createdAt', 'DESC']]})
     .then(bigDeal => {
@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
         uncomp: uncomp
       });
     });
-})
+});
 
 router.post('/todo', function(req, res) {
   models.todo.create({
@@ -21,8 +21,8 @@ router.post('/todo', function(req, res) {
     })
     .then(function() {
       res.redirect('/');
-    })
-})
+    });
+});
 //Hey dumbass, req.body takes name: value pairs from the HTML, so make sure you're calling by name and the value you want is in value. Don't forget this!!! Also fuck promises.
 router.post('/flip', function(req, res) {
   const id = Number(req.body.completeTodo);
@@ -33,7 +33,7 @@ router.post('/flip', function(req, res) {
       id: id
     }
   }).then(() => res.redirect('/'));
-})
+});
 
 router.post('/delete', function(req, res) {
   const id = Number(req.body.deleteTodo);
@@ -42,7 +42,7 @@ router.post('/delete', function(req, res) {
       id: id
     }
   }).then(() => res.redirect('/'));
-})
+});
 
 router.post('/update', function(req, res) {
   const id = Number(req.body.updateTodo);
@@ -53,7 +53,7 @@ router.post('/update', function(req, res) {
       id: id
     }
   }).then(() => res.redirect('/'));
-})
+});
 
 router.post('/destroy', function(req,res)  {
   models.todo.destroy({
@@ -61,6 +61,6 @@ router.post('/destroy', function(req,res)  {
       completed: 't'
     }
   }).then (() => res.redirect('/'));
-})
+});
 
 module.exports = router;
